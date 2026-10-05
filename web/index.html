@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./fontawesome-free-6.2.0-web/css/all.min.css">
+    <title>Document</title>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="main-sidebar">
+      <div class="aside-header">
+          <div class="brand">
+              <h3>DASHBOARD</h3>
+          </div>
+      </div>
+      <div class="sidebar">
+        <div class="list-item">
+          <button class="item" data-target="accueil" onclick="showPage('accueil', this)">
+            <i class="fa fa-home"></i>
+            Accueil
+          </button>
+          <button class="item" data-target="inserer" onclick="showPage('inserer', this)">
+            <i class="fa fa-plus"></i>
+            Insérer
+          </button>
+          <button class="item" data-target="liste" onclick="showPage('liste', this)">
+            <i class="fa fa-list"></i>
+            Liste Produits
+          </button>
+          <button class="item" data-target="modifier" onclick="showPage('modifier', this)">
+            <i class="fa fa-edit"></i>
+            Modifiers
+          </button>
+          <button class="item" data-target="panier" onclick="showPage('panier', this)">
+            <i class="fa fa-shopping-cart"></i>
+            Panier
+            <span class="panier-count">0</span>
+          </button>
+          <button class="item" data-target="historiques" onclick="showPage('historiques', this)">
+            <i class="fa fa-calendar"></i>
+            Historiques
+          </button>
+          <button class="item" data-target="liste_notes" onclick="showPage('liste_notes', this)">
+            <i class="fa fa-pen"></i>
+            Notes
+          </button>
+          <button class="item" data-target="stock_faible_section" onclick="showPage('stock_faible_section', this)" id="stock__faible">
+            <i class="fa fa-shopping-cart"></i>
+            Stock faible
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="main-container">
+
+      <section id="accueil" class="page-section">
+            <h1>Statistiques de la vente</h1>
+            <div class="cards">
+                <div class="card-container">
+                  <div class="card-body">
+                    <div class="card-info">
+                      <h3>Bénéfice du jour</h3>
+                      <h1 id="val-jour">0</h1>
+                    </div>
+                    <div class="card-progress">
+                      <svg width="96" height="96" class="stroke-yellow">
+                        <circle id="circle1" cx="38" cy="38" r="36"></circle>
+                      </svg>
+                      <div class="percentage"><p id="pct-jour">0%</p></div>
+                    </div>
+                  </div>
+                  <div class="card-footer"><small>Dans ce jours-ci</small></div>
+                </div>
+            
+                <div class="card-container">
+                  <div class="card-body">
+                    <div class="card-info">
+                      <h3>Bénéfice du mois</h3>
+                      <h1 id="val-mois">0</h1>
+                    </div>
+                    <div class="card-progress">
+                      <svg width="96" height="96" class="stroke-fuscha">
+                        <circle id="circle2" cx="38" cy="38" r="36"></circle>
+                      </svg>
+                      <div class="percentage"><p id="pct-mois">0%</p></div>
+                    </div>
+                  </div>
+                  <div class="card-footer"><small>Dans les 24h précédent</small></div>
+                </div>
+            
+                <div class="card-container">
+                  <div class="card-body">
+                    <div class="card-info">
+                      <h3>Vendu de ce mois</h3>
+                      <h1 id="val-ventes">0</h1>
+                    </div>
+                    <div class="card-progress">
+                      <svg width="96" height="96" class="stroke-cyan">
+                        <circle id="circle3" cx="38" cy="38" r="36"></circle>
+                      </svg>
+                      <div class="percentage"><p id="pct-ventes">0%</p></div>
+                    </div>
+                  </div>
+                  <div class="card-footer"><small>Dans ce mois-ci</small></div>
+                </div>
+            </div>
+            <div class="top-produits">
+              <h2>Produits le plus vendus</h2>
+              <table>
+                <thead>
+                  <th>Nom</th>
+                  <th>Prix</th>
+                  <th>Quantité</th>
+                </thead>
+                <tbody id="liste-produits">
+                </tbody>
+              </table>
+            </div>
+      </section>
+
+      <section id="inserer" class="page-section">
+          <h1>Insérer un produit</h1>
+          <div class="flex-inserer">
+            <form id="formProduit" enctype="multipart/form-data">
+                <label>Nom du produit</label>
+                  <input type="text" id="nom" placeholder="Entrer nom de produit..." required />
+                <label>Caractéristiques</label>
+                  <textarea id="caracteristique" rows="3" placeholder="Entrer son caractéristique..." required></textarea>
+                <div class="flex-prix">
+                  <div class="price-body">
+                    <div><label>Prix d'achat</label></div>
+                    <div>
+                      <input type="number" class="flex-inp-prix" id="prix_achat" step="0.01" min="0" inputmode="decimal" lang="fr" placeholder="Entrer le prix d'achat..." required />
+                    </div>
+                  </div>
+                  <div class="price-body">
+                    <div><label>Prix de vente</label></div>
+                    <div>
+                      <input type="number" class="flex-inp-prix" id="prix_vente" step="0.01" min="0" inputmode="decimal" lang="fr" placeholder="Entrer le prix de vente..." required />
+                    </div>
+                  </div>
+                </div>
+                <label>Image (nom fichier)</label>
+                  <button type="button" id="btnImage" class="btn-image">Choisir une image</button>
+                  <span id="nomFichierImage" style="margin-left: 10px;"></span>
+                  <input type="file" id="image" accept="image/*" style="display:none;" />
+                <div class="flex-prix">
+                  <div class="price-body">
+                    <div><label>Quantité</label></div>
+                    <div>
+                      <input type="number" class="flex-inp-prix" id="quantite" step="1" min="0" placeholder="Entrer la quantité..." required />
+                    </div>
+                  </div>
+                  <div class="price-body">
+                    <div><label>Emplacement</label></div>
+                    <div>
+                      <input type="text" class="flex-inp-prix" id="place" placeholder="Entrer l'emplacement..." required />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" onsubmit="ajouterProduit()" class="btn-inserer">Insérer le produit</button>
+              </form>
+              <div class="message" id="message"></div>
+          </div>
+      </section>
+
+      <section id="modifier" class="page-section">
+            <h1>Modifier un produit</h1>
+            <div class="recherche-modifier">
+              <div class="flex-search">
+                <div>
+                  <input type="text" id="recherche_mod" placeholder="Tapez un nom de produit..." />
+                </div>
+              </div>
+              <button type="button" onclick="resetFormModifier()" class="stop-modification">Stop modification</button>
+            </div>
+            <div id="liste_produits_modifier" class="cartes-container"></div>
+            <div id="loaderModifier" class="loader" style="display: none;"></div>
+            <form id="formModifier" style="display:none;" enctype="multipart/form-data">
+              <input type="hidden" id="mod_id" />
+              <label>Nom du produit</label><br>
+                <input type="text" id="mod_nom" required /><br>
+              <label>Caractéristiques</label><br>
+                <textarea id="mod_caracteristique" rows="3" required></textarea><br>
+              <label>Emplacement</label><br>
+                <input type="text" id="mod_place" required /><br>
+              <label>Prix d'achat</label><br>
+                <input type="text" id="mod_prix_achat" required /><br>
+              <label>Prix de vente</label><br>
+                <input type="text" id="mod_prix_vente" required /><br>
+              <label>Quantité</label><br>
+                <input type="number" id="mod_quantite" min="0" required /><br>
+              <button type="submit" class="btn-register-edit">Enregistrer les modifications</button>
+            </form>
+            <div id="msgModifier"></div>
+      </section>
+
+      <section id="liste" class="page-section">
+            <h1>Liste des produits</h1>
+            <div class="recherche-filtres">
+              <div class="flex-search">
+                <div>
+                  <input type="text" id="recherche_liste" placeholder="Rechercher un produit par nom">
+                </div>
+                <div>
+                  <button onclick="chercherListeProduits()" class="btn-search">Rechercher</button>
+                </div>
+              </div>
+              <button onclick="trierAZ()" id="btn-trie">Trier A-Z</button>
+            </div>
+            <div id="liste_produits" class="cartes-container"></div>
+            <div id="msgListe"></div>
+      </section>
+
+      <section id="panier" class="page-section">
+        <h1>Panier</h1>
+
+        <div id="panier_produits"></div>
+
+        <div class="panier-actions" style="margin-top:12px;">
+          <button onclick="enregistrerPdf()" class="btn-pdf">
+            <i class="fa fa-file-pdf"></i> Enregistrer en PDF
+          </button>
+          <button onclick="enregistrerPng()" class="btn-png">
+            <i class="fa fa-mobile"></i> Ticket smartphone
+          </button>
+          <button onclick="previewVente()" class="btn-preview">
+            <i class="fa fa-eye"></i> Prévisualiser
+          </button>
+        </div>
+
+        <div class="panierMsg" style="color: red; margin-bottom: 15px; margin-top:8px;"></div>
+      </section>
+
+      <section id="historiques" class="page-section">
+            <h2 class="title-panier-left">Lafo androany:</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom:</th>
+                  <th>Prix:</th>
+                </tr>
+              </thead>
+              <tbody id="ventes-aujourdhui" class="nav-historique"></tbody>
+            </table>
+            <p><strong>Totaly androany :</strong> <span id="total-aujourdhui">0 Ar</span></p>
+
+            <h2 class="title-panier-left">Lafo omaly:</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom:</th>
+                  <th>Prix:</th>
+                </tr>
+              </thead>
+              <tbody id="ventes-hier" class="nav-historique"></tbody>
+            </table>
+            <p><strong>Totaly omaly :</strong> <span id="total-hier">0 Ar</span></p>
+      </section>
+
+      <section id="stock_faible_section" class="page-section">
+            <h2>Produits à faible stock</h2>
+            <ul id="stock_faible_liste"></ul>
+      </section>
+
+      <section id="liste_notes" class="page-section">
+        <div class="flex-note">
+          <h1>Mes Notes</h1>
+          <div id="container-note" class="note-input-container">
+            <textarea id="notes_text" rows="5" placeholder="Écrivez votre note ici..."></textarea>
+            <button type="button" onclick="enregistrerNotes()" class="btn-note">Enregistrer</button>
+            <p id="notes_message" class="note-message"></p>
+          </div>
+          <div class="liste_noter" id="notes_liste_container"></div>
+        </div>
+      </section>
+
+    </div>
+    <div class="extrabar">
+      <div class="header-right">
+        <div class="toggle-theme">
+          <i class="fa fa-sun active"></i>
+          <i class="fa fa-moon"></i>
+        </div>
+      </div>
+      <div id="salutation" class="salutation-message"></div>
+      <div class="card-info-stock">
+        <h3>Articles en stock</h3>
+        <span id="total-articles">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="notifSuccess" class="notif-success">Produit modifié avec succès</div>
+
+  <script src="./js/theme.js"></script>
+  <script src="./js/accueil.js"></script>
+  <script src="./js/insert.js"></script>
+  <script src="./js/modifier.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/liste.js"></script>
+  <script src="./js/panier.js"></script>
+  <script src="./js/liste_vendus.js"></script>
+  <script src="./js/notification.js"></script>
+  <script src="./js/liste_notes.js"></script>
+  <script src="./js/historiques.js"></script>
+  <script src="./js/stock.js"></script>
+  <script src="./js/prod_vendu.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lastPage = localStorage.getItem('page_active') || 'accueil';
+      const button = document.querySelector(`.sidebar .item[data-target="${lastPage}"]`);
+      if (button) {
+        showPage(lastPage, button);
+      } else {
+        showPage('accueil', document.querySelector('.sidebar .item[data-target="accueil"]'));
+      }
+    });
+
+    function showPage(pageId, clickedButton = null) {
+      const sections = document.querySelectorAll('.page-section');
+      const activeSection = document.getElementById(pageId);
+
+      sections.forEach(section => {
+        if (section.id !== pageId) {
+          section.classList.remove('active-section');
+          setTimeout(() => { section.style.display = 'none'; }, 500);
+        }
+      });
+
+      if (activeSection) {
+        clearTimeout(activeSection.hideTimeout);
+        activeSection.style.display = 'block';
+        setTimeout(() => { activeSection.classList.add('active-section'); }, 10);
+      }
+
+      document.querySelectorAll('.sidebar .item').forEach(btn => btn.classList.remove('active'));
+
+      if (!clickedButton) {
+        clickedButton = document.querySelector(`.sidebar .item[data-target="${pageId}"]`);
+      }
+      if (clickedButton) clickedButton.classList.add('active');
+
+      if (pageId === 'accueil') {
+        afficherStats();
+        afficherSalutation();
+        afficherTotalArticles();
+      } else if (pageId === 'inserer') resetFormInsertion();
+      else if (pageId === 'modifier') chargerProduitsModifier();
+      else if (pageId === 'liste') chargerProduits();
+      else if (pageId === 'panier') onPagePanierVisible();
+      else if (pageId === 'historiques') chargerHistorique();
+      else if (pageId === 'liste_notes') chargerNotes();
+      else if (pageId === 'stock_faible_section') afficherStockFaible();
+    }
+
+    document.addEventListener('dragover', (e) => e.preventDefault());
+    document.addEventListener('drop', (e) => e.preventDefault());
+
+    function showNotification(message) {
+      const notif = document.getElementById('notifSuccess');
+      notif.textContent = message;
+      notif.classList.add('show');
+      setTimeout(() => {
+        notif.classList.remove('show');
+        notif.style.display = 'none';
+      }, 3000);
+    }
+
+    function afficherSalutation() {
+      const heure = new Date().getHours();
+      const message = (heure < 12) ? "Bonjour !" : "Bonsoir !";
+      const salutationEl = document.getElementById('salutation');
+      if (salutationEl) salutationEl.textContent = message;
+    }
+  </script>
+</body>
+</html>
